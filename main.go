@@ -21,10 +21,20 @@ type Block struct {
 
 type Chain []Block
 
+type Transation struct {
+	Sender string `json:sender`
+	Receiver string `json:receiver`
+	Amount string `json:amount`
+}
+
+type Transations []Transation
+
+type Nodes []string
+
 type Blockchain interface {
 	CreateBlock(_proof int, _previousHash string)
 	GetPreviousBlock()
-	ProofOfWork()
+	ProofOfWork(_previous_proof int)
 	Hash()
 	IsChainValid()
 }
@@ -46,7 +56,7 @@ func ( this_chain Chain) GetPreviousBlock () Block {
 	return block
 }
 
-func ( this_chain Chain) ProofOfWork ( _previous_proof int) int {
+func ( this_chain Chain) ProofOfWork (_previous_proof int) int {
 	new_proof := 1
     h := sha256.New()
 	check_proof := false
